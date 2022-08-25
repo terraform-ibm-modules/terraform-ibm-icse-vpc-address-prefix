@@ -1,29 +1,81 @@
-variable "ibmcloud_api_key" {
+##############################################################################
+# Address Prefix Variables
+##############################################################################
+
+variable "prefix" {
+  description = "The prefix that you would like to append to your resources"
   type        = string
-  description = "The IBM Cloud API Key"
-  sensitive   = true
+  default     = "icse-dev"
 }
 
 variable "region" {
+  description = "The region where VPC is provisioned"
   type        = string
-  description = "Region to provision all resources created by this example"
-  default     = "us-south"
+  default     = "eu-de"
 }
 
-variable "prefix" {
+variable "vpc_id" {
+  description = "ID of the VPC where address prefixes will be created"
   type        = string
-  description = "Prefix to append to all resources created by this example"
-  default     = "terraform"
+  default     = null
 }
+
+variable "address_prefixes" {
+  description = "IP range that will be defined for the VPC for a certain location. Use only with manual address prefixes."
+  type = object({
+    zone-1 = optional(list(string))
+    zone-2 = optional(list(string))
+    zone-3 = optional(list(string))
+  })
+  default = {
+    zone-1 = null
+    zone-2 = null
+    zone-3 = null
+  }
+  validation {
+    error_message = "Keys for `use_public_gateways` must be in the order `zone-1`, `zone-2`, `zone-3`."
+    condition     = var.address_prefixes == null ? true : (keys(var.address_prefixes)[0] == "zone-1" && keys(var.address_prefixes)[1] == "zone-2" && keys(var.address_prefixes)[2] == "zone-3")
+  }
+
+  validation {
+    error_message = "Each CIDR must be unique."
+    condition = length(
+      distinct(flatten([
+        for zone in ["zone-1", "zone-2", "zone-3"] :
+        var.address_prefixes[zone] if var.address_prefixes[zone] != null
+      ]))
+      ) == length(
+      flatten([
+        for zone in ["zone-1", "zone-2", "zone-3"] :
+        var.address_prefixes[zone] if var.address_prefixes[zone] != null
+      ])
+    )
+  }
+}
+
+variable "dev_mode" {
+  description = "Enable resource creation with no vpc_id"
+  type        = bool
+  default     = true
+}
+
+##############################################################################
+
+
+##############################################################################
+# forced variables
+##############################################################################
 
 variable "resource_group" {
+  description = "Mandatory value unused by this module"
   type        = string
-  description = "An existing resource group name to use for this example, if unset a new resource group will be created"
   default     = null
 }
 
 variable "resource_tags" {
+  description = "Mandatory value unused by this module"
   type        = list(string)
-  description = "Optional list of tags to be added to created resources"
-  default     = []
+  default     = null
 }
+
+##############################################################################

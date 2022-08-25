@@ -1,0 +1,121 @@
+{
+  "path": ".",
+  "variables": {
+    "address_prefixes": {
+      "name": "address_prefixes",
+      "type": "object({\n    zone-1 = optional(list(string))\n    zone-2 = optional(list(string))\n    zone-3 = optional(list(string))\n  })",
+      "description": "IP range that will be defined for the VPC for a certain location. Use only with manual address prefixes.",
+      "default": {
+        "zone-1": null,
+        "zone-2": null,
+        "zone-3": null
+      },
+      "pos": {
+        "filename": "variables.tf",
+        "line": 23
+      }
+    },
+    "dev_mode": {
+      "name": "dev_mode",
+      "type": "bool",
+      "description": "Enable resource creation with no vpc_id",
+      "default": false,
+      "pos": {
+        "filename": "variables.tf",
+        "line": 56
+      }
+    },
+    "prefix": {
+      "name": "prefix",
+      "type": "string",
+      "description": "The prefix that you would like to append to your resources",
+      "default": "icse-dev",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 5
+      }
+    },
+    "region": {
+      "name": "region",
+      "type": "string",
+      "description": "The region where VPC is provisioned",
+      "default": "eu-de",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 11
+      }
+    },
+    "vpc_id": {
+      "name": "vpc_id",
+      "type": "string",
+      "description": "ID of the VPC where address prefixes will be created",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 17
+      }
+    }
+  },
+  "outputs": {
+    "list": {
+      "name": "list",
+      "description": "List of Address Prefix Objects",
+      "pos": {
+        "filename": "outputs.tf",
+        "line": 5
+      }
+    }
+  },
+  "required_core": [
+    "\u003e=1.0"
+  ],
+  "required_providers": {
+    "ibm": {
+      "source": "IBM-Cloud/ibm",
+      "version_constraints": [
+        "~\u003e1.43.0"
+      ]
+    }
+  },
+  "managed_resources": {
+    "ibm_is_vpc_address_prefix.address_prefixes": {
+      "mode": "managed",
+      "type": "ibm_is_vpc_address_prefix",
+      "name": "address_prefixes",
+      "attributes": {
+        "vpc": "vpc_id"
+      },
+      "provider": {
+        "name": "ibm"
+      },
+      "pos": {
+        "filename": "main.tf",
+        "line": 63
+      }
+    }
+  },
+  "data_resources": {},
+  "module_calls": {
+    "address_prefixes": {
+      "name": "address_prefixes",
+      "source": "./config_modules/list_to_map",
+      "attributes": {
+        "list": "dev_mode"
+      },
+      "pos": {
+        "filename": "main.tf",
+        "line": 47
+      }
+    },
+    "prefix_map": {
+      "name": "prefix_map",
+      "source": "./config_modules/list_to_map",
+      "attributes": {
+        "list": "address_prefixes"
+      },
+      "pos": {
+        "filename": "main.tf",
+        "line": 21
+      }
+    }
+  }
+}
