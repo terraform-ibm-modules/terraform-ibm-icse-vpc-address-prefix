@@ -10,6 +10,9 @@
         "zone-2": null,
         "zone-3": null
       },
+      "source": [
+        "module.prefix_map"
+      ],
       "pos": {
         "filename": "variables.tf",
         "line": 23
@@ -20,6 +23,9 @@
       "type": "bool",
       "description": "Enable resource creation with no vpc_id",
       "default": false,
+      "source": [
+        "module.address_prefixes"
+      ],
       "pos": {
         "filename": "variables.tf",
         "line": 56
@@ -49,10 +55,15 @@
       "name": "vpc_id",
       "type": "string",
       "description": "ID of the VPC where address prefixes will be created",
+      "required": true,
+      "source": [
+        "ibm_is_vpc_address_prefix.address_prefixes.vpc"
+      ],
       "pos": {
         "filename": "variables.tf",
         "line": 17
-      }
+      },
+      "immutable": true
     }
   },
   "outputs": {
