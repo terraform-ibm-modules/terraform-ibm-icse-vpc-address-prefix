@@ -112,6 +112,27 @@
       "attributes": {
         "list": "dev_mode"
       },
+      "managed_resources": {},
+      "data_resources": {},
+      "outputs": {
+        "configuration_failure": {
+          "name": "configuration_failure",
+          "description": "Forced output",
+          "value": "local.configuration_failure_conflicting_values_lookup_value_regex_and_value_is_not_null",
+          "pos": {
+            "filename": "config_modules/list_to_map/outputs.tf",
+            "line": 20
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "List converted into map",
+          "pos": {
+            "filename": "config_modules/list_to_map/outputs.tf",
+            "line": 5
+          }
+        }
+      },
       "pos": {
         "filename": "main.tf",
         "line": 47
@@ -122,6 +143,27 @@
       "source": "./config_modules/list_to_map",
       "attributes": {
         "list": "address_prefixes"
+      },
+      "managed_resources": {},
+      "data_resources": {},
+      "outputs": {
+        "configuration_failure": {
+          "name": "configuration_failure",
+          "description": "Forced output",
+          "value": "local.configuration_failure_conflicting_values_lookup_value_regex_and_value_is_not_null",
+          "pos": {
+            "filename": "config_modules/list_to_map/outputs.tf",
+            "line": 20
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "List converted into map",
+          "pos": {
+            "filename": "config_modules/list_to_map/outputs.tf",
+            "line": 5
+          }
+        }
       },
       "pos": {
         "filename": "main.tf",
